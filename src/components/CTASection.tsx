@@ -41,13 +41,13 @@ export default function CTASection({ t }: CTASectionProps) {
                 {t.cta.button}
                 <ArrowRight className="w-5 h-5" />
               </a>
-              <a
+              {/* <a
                 href="tel:+33184801234"
                 className="inline-flex items-center justify-center gap-2 px-7 py-4 text-base font-semibold text-white glass rounded-xl hover:bg-white/10 transition-all"
               >
                 <Phone className="w-5 h-5" />
                 {t.cta.secondary}
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

@@ -1,11 +1,14 @@
 import { Mail, MapPin, Phone, Linkedin, Twitter, Github } from 'lucide-react';
 import type { Translation } from '../i18n';
 
+type Page = 'home' | 'contact' | 'legal';
+
 interface FooterProps {
   t: Translation;
+  onNavigate: (page: Page) => void;
 }
 
-export default function Footer({ t }: FooterProps) {
+export default function Footer({ t, onNavigate }: FooterProps) {
   return (
     <footer id="contact" className="bg-ink-900 text-slate-400 pt-20 pb-10">
       <div className="container-x">
@@ -76,12 +79,12 @@ export default function Footer({ t }: FooterProps) {
                   <span className="text-sm">{t.footer.email}</span>
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="tel:+33184801234" className="flex items-start gap-3 hover:text-white transition-colors">
                   <Phone className="w-4 h-4 text-brand-400 mt-0.5 flex-shrink-0" />
                   <span className="text-sm">{t.footer.phone}</span>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -92,9 +95,14 @@ export default function Footer({ t }: FooterProps) {
             © {new Date().getFullYear()} wecantrans. {t.footer.rights}
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-sm hover:text-white transition-colors">{t.footer.legal}</a>
+            <button
+              onClick={() => onNavigate('legal')}
+              className="text-sm hover:text-white transition-colors"
+            >
+              {t.footer.legal}
+            </button>
             <a href="#" className="text-sm hover:text-white transition-colors">{t.footer.privacy}</a>
-            <a href="#" className="text-sm hover:text-white transition-colors">{t.footer.terms}</a>
+            {/* <a href="#" className="text-sm hover:text-white transition-colors">{t.footer.terms}</a> */}
           </div>
         </div>
       </div>

@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react';
 import { Menu, X, Globe, ArrowRight } from 'lucide-react';
 import type { Lang, Translation } from '../i18n';
 
+type Page = 'home' | 'contact' | 'legal';
+
 interface NavbarProps {
   t: Translation;
   lang: Lang;
   onToggleLang: () => void;
+  page: Page;
+  onNavigate: (page: Page) => void;
 }
 
-export default function Navbar({ t, lang, onToggleLang }: NavbarProps) {
+export default function Navbar({ t, lang, onToggleLang, page, onNavigate }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -20,23 +24,38 @@ export default function Navbar({ t, lang, onToggleLang }: NavbarProps) {
 
   const links = [
     { href: '#services', label: t.nav.services },
+    { href: '#infra', label: t.nav.infra },
     { href: '#why', label: t.nav.why },
     { href: '#process', label: t.nav.process },
     { href: '#testimonials', label: t.nav.testimonials },
-    { href: '#pricing', label: t.nav.pricing },
+    // { href: '#pricing', label: t.nav.pricing },
     { href: '#faq', label: t.nav.faq },
   ];
 
+  const handleSectionLink = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    setOpen(false);
+    if (page !== 'home') {
+      e.preventDefault();
+      onNavigate('home');
+      requestAnimationFrame(() => {
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  };
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? 'bg-ink-900/85 backdrop-blur-xl border-b border-white/10 py-3'
           : 'bg-transparent py-5'
-      }`}
+        }`}
     >
       <nav className="container-x flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-2.5 group">
+        <a
+          href="#hero"
+          onClick={(e) => handleSectionLink(e, '#hero')}
+          className="flex items-center gap-2.5 group"
+        >
           <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-lg shadow-brand-500/30 transition-transform group-hover:scale-105">
             <span className="font-display font-bold text-white text-lg">W</span>
           </div>
@@ -50,6 +69,7 @@ export default function Navbar({ t, lang, onToggleLang }: NavbarProps) {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleSectionLink(e, link.href)}
               className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors rounded-lg hover:bg-white/5"
             >
               {link.label}
@@ -65,13 +85,13 @@ export default function Navbar({ t, lang, onToggleLang }: NavbarProps) {
             <Globe className="w-4 h-4" />
             {lang.toUpperCase()}
           </button>
-          <a
-            href="#quote"
+          <button
+            onClick={() => onNavigate('contact')}
             className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-xl shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 hover:scale-[1.03] transition-all"
           >
             {t.nav.cta}
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </button>
           <button
             onClick={() => setOpen(!open)}
             className="lg:hidden p-2 text-white"
@@ -87,19 +107,22 @@ export default function Navbar({ t, lang, onToggleLang }: NavbarProps) {
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setOpen(false)}
+              onClick={(e) => handleSectionLink(e, link.href)}
               className="block px-4 py-3 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
             >
               {link.label}
             </a>
           ))}
-          <a
-            href="#quote"
-            onClick={() => setOpen(false)}
-            className="block mx-4 mt-2 px-5 py-3 text-sm font-semibold text-center text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-xl"
+          <button
+            onClick={() => {
+              setOpen(false);
+              onNavigate('contact');
+            }}
+            className="block w-full mx-4 mt-2 px-5 py-3 text-sm font-semibold text-center text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-xl"
+            style={{ width: 'calc(100% - 2rem)' }}
           >
             {t.nav.cta}
-          </a>
+          </button>
         </div>
       )}
     </header>

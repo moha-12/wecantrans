@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles, ShieldCheck, Cloud, Code2 } from 'lucide-react';
+import { ArrowRight, Sparkles, ShieldCheck, Cloud, Network } from 'lucide-react';
 import type { Translation } from '../i18n';
 
 interface HeroProps {
@@ -71,7 +71,7 @@ export default function Hero({ t }: HeroProps) {
             style={{ animationDelay: '0.4s' }}
           >
             {[
-              { icon: Code2, label: 'Dev' },
+              { icon: Network, label: 'Network' },
               { icon: ShieldCheck, label: 'Security' },
               { icon: Cloud, label: 'Cloud' },
             ].map((item, i) => (

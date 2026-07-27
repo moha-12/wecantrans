@@ -1,8 +1,8 @@
-import { Code2, ShieldCheck, Cloud, Lightbulb, Headset, Database } from 'lucide-react';
+import { Code2, ShieldCheck, Cloud, Headset, Network, Wifi } from 'lucide-react';
 import type { Translation } from '../i18n';
 import { useReveal } from '../hooks/useReveal';
 
-const iconMap = { Code2, ShieldCheck, Cloud, Lightbulb, Headset, Database };
+const iconMap = { Code2, ShieldCheck, Cloud, Headset, Network, Wifi };
 
 interface ServicesProps {
   t: Translation;
